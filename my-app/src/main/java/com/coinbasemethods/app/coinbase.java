@@ -168,9 +168,7 @@ public static String coinBaseBuyEthereum(String users_access_token_coinbase,
     con.setRequestProperty ("Authorization", "Bearer "+users_access_token_coinbase);
     con.setRequestProperty ("CB-VERSION", "YOUR_CB_VERSION");
     con.setRequestProperty ("Content-Type", "application/json");
-    //con.setRequestProperty ("{\"total\": \"1.00\", \"currency\": \"COINBASE_CURRENCY\", \"payment_method\": \"0caa4076-f3ed-5f82-84c3-00c1b87f3d1b\", \"agree_btc_amount_varies\":\"true\", \"commit\":\"false\"}");
     con.setDoOutput(true);
-    //always do 10 because they'll only charge 99 cents for that transaction, they always charge .99 even for a 1 dollar transaction
     String buyOrderJsonStr = "{\"total\": \""+total_amount_to_buy+"\", \"currency\": \""+"YOUR_CURRENCY"+"\", \"payment_method\": \""+users_bank_account_id_coinbase+"\", \"agree_btc_amount_varies\":\"true\", \"quote\":\""+quote+"\", \"commit\":\""+commit+"\"}";
     OutputStream os = con.getOutputStream();
     os.write(buyOrderJsonStr.getBytes());
