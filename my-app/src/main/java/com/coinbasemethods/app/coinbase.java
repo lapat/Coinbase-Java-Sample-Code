@@ -23,7 +23,6 @@ import java.io.*;
 public class coinbase{
 
   public static String getCoinBaseAuthFirstTime(String users_code_coinbase, String user_id){
-    System.out.println("getCoinBaseAuthFirstTime");
     JSONObject jsonCoinBaseAuth=null;
     String coinBaseAuth=getAccessTokenCoinBase(users_code_coinbase);
     if (coinBaseAuth.equals("") || coinBaseAuth.contains("expired_token")){
@@ -39,7 +38,6 @@ public class coinbase{
 
   public static String refreshAccessToken(String users_refresh_token_coinbase){
     String AJSONStr="";
-    System.out.println("refreshAccessToken");
     try{
       //Exchange code for an access token
       HttpURLConnection con = (HttpURLConnection) new URL("https://api.coinbase.com/oauth/token?grant_type=refresh_token&client_id="+"YOUR_CLIENT_ID"+"&client_secret="+"YOUR_SECRET"+"&refresh_token="+users_refresh_token_coinbase).openConnection();
@@ -66,7 +64,7 @@ public class coinbase{
   }
 
 public static String coinBaseSendMoneyToOtherCoinbaseAccount(String users_access_token_coinbase,
-                                                      String transfer_to_ethereum_address,
+                                                      String transfer_to_address,
                                                       String users_wallet_id,
                                                       String amount,
                                                       String user_id){
@@ -80,7 +78,7 @@ public static String coinBaseSendMoneyToOtherCoinbaseAccount(String users_access
     con.setRequestProperty ("Content-Type", "application/json");
     con.setDoOutput(true);
     String randomIdemString=UUID.randomUUID().toString();
-    String buyOrderJsonStr = "{\"type\": \"send\", \"to\": \""+transfer_to_ethereum_address+"\", \"amount\": \""+amount+"\", \"currency\":\""+"YOUR_CURRENCY"+"\", \"idem\":\""+randomIdemString+"\"}";
+    String buyOrderJsonStr = "{\"type\": \"send\", \"to\": \""+transfer_to_address+"\", \"amount\": \""+amount+"\", \"currency\":\""+"YOUR_CURRENCY"+"\", \"idem\":\""+randomIdemString+"\"}";
     OutputStream os = con.getOutputStream();
     os.write(buyOrderJsonStr.getBytes());
     os.flush();
@@ -106,12 +104,12 @@ public static String coinBaseSendMoneyToOtherCoinbaseAccount(String users_access
     }
     returnedStringFromBuy=AJSONStr;
   }catch(Exception e){
-    System.out.println("Exception coinBaseSendMoneyEthereumToCoinFlash E= "+e);
+    System.out.println("Exception coinBaseSendMoneyToCoinFlash E= "+e);
   }
   return returnedStringFromBuy;
 }
 
-public static String coinBaseQuoteEthereum(String users_access_token_coinbase,
+public static String coinBaseQuote(String users_access_token_coinbase,
                                     String users_wallet_id,
                                     String users_bank_account_id_coinbase,
                                     String total_amount_to_buy){
@@ -149,12 +147,12 @@ public static String coinBaseQuoteEthereum(String users_access_token_coinbase,
     }
     returnedStringFromBuy=AJSONStr;
   }catch(Exception e){
-    System.out.println("Exception coinBaseQuoteEthereum E= "+e);
+    System.out.println("Exception coinBaseQuote E= "+e);
   }
   return returnedStringFromBuy;
 }
 
-public static String coinBaseBuyEthereum(String users_access_token_coinbase,
+public static String coinBaseBuy(String users_access_token_coinbase,
                                   String users_wallet_id,
                                   String users_bank_account_id_coinbase,
                                   String total_amount_to_buy,
@@ -194,7 +192,7 @@ public static String coinBaseBuyEthereum(String users_access_token_coinbase,
     }
     returnedStringFromBuy=AJSONStr;
   }catch(Exception e){
-    System.out.println("Exception coinBaseBuyEthereum E= "+e);
+    System.out.println("Exception coinBaseBuy E= "+e);
   }
   return returnedStringFromBuy;
 }
@@ -228,7 +226,6 @@ public static String coinBaseListPaymentMethods(String users_access_token_coinba
 }
 
 public static String coinBaseListWallets(String users_access_token_coinbase){
-  System.out.println("coinBaseListWallets");
   String AJSONStr="";
   try{
     HttpURLConnection con = (HttpURLConnection) new URL("https://api.coinbase.com/v2/accounts/").openConnection();
@@ -312,7 +309,6 @@ public static String coinBaseUser(String users_access_token_coinbase){
 }
 
 public static String revokeAccessTokenCoinBase(String users_access_token_coinbase){
-  System.out.println("revokeAccessTokenCoinBase");
   String AJSONStr="";
   try{
     HttpURLConnection con = (HttpURLConnection) new URL("https://api.coinbase.com/oauth/revoke?token="+users_access_token_coinbase).openConnection();
@@ -342,7 +338,6 @@ public static String revokeAccessTokenCoinBase(String users_access_token_coinbas
 
 
 public static String getAccessTokenCoinBase(String users_code_coinbase){
-  System.out.println("getAccessTokenCoinBase");
   String AJSONStr="";
   try{
     //Exchange code for an access token
